@@ -50,6 +50,7 @@ from PIL import ImageFont
 GAIN = 1
 pump = 0
 growLight_status = 0
+global soil_lvl
 
 sensor = W1ThermSensor()
 
@@ -171,10 +172,12 @@ def SensorData_Logging_display_update():
 	adc = Adafruit_ADS1x15.ADS1115()
 	
 	adc_value = adc.read_adc(0, gain=GAIN)
+	print('ADC :'+str(adc_value))
+	
 	if adc_value < 8000 :
-	    soil_lvl = Err
+		soil_lvl = Err
 	else :
-	    soil_lvl = (-adc_value+23000)/(23000-10000)*100
+		soil_lvl = round((-adc_value+23000)/(13000.00)*100.0,2)
 	
 	draw2.text((x, top+40), 'Soil',  font=font, fill=255)
 	disp.image(image2)
@@ -252,7 +255,7 @@ def SensorData_Logging_display_update():
 	            line_count += 1
 	        draw.text((x, top+40), 'Watr lvl:'+ str(row["waterLvl"]+' %'),  font=font, fill=255)
 	        line_count += 1	
-	draw.text((x, top+50), 'GL:'+str(growLight_status), font=font, fill=255)
+	draw.text((x, top+50), 'Grow Light:'+str(growLight_status), font=font, fill=255)
 	
 	# with open('/home/pi/Deep_data/bulbs_status.csv', mode='r') as csv_file:
 	    # csv_reader = csv.DictReader(csv_file)
