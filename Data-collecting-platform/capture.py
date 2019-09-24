@@ -58,7 +58,9 @@ sensor = W1ThermSensor()
 adc = Adafruit_ADS1x15.ADS1115()
 
 #get the date and time, set the date and time as a filename.
+global current_date
 currentdate = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
+current_date = datetime.datetime.now().strftime("%Y-%m-%d")
 mnAnddt = datetime.datetime.now().strftime("%m-%d")
 
 #log file configuration
@@ -275,6 +277,12 @@ def SensorData_Logging_display_update():
 	
 def NoIR_Capture():
 	
+	if (os.path.exists('/home/pi/Deep_data/infa_1/'+ current_date) == False ) :
+		os.mkdir('/home/pi/Deep_data/infa_1/'+ current_date)
+	
+	if (os.path.exists('/home/pi/Deep_data/infa_2/'+ current_date) == False ) :
+		os.mkdir('/home/pi/Deep_data/infa_2/'+ current_date)
+	
 	GPIO.output(irLED,GPIO.LOW)
 	print "ir LED on"
 	time.sleep(2)
@@ -313,8 +321,11 @@ def RGB_Capture():
 	camera.awb_mode = 'off'
 	camera.awb_gains = g
 	# Finally, take photo with the fixed settings
+	
+	if (os.path.exists('/home/pi/Deep_data/rgb/'+current_date) == False ) :
+		os.mkdir('/home/pi/Deep_data/rgb/'+current_date)
 
-	camera.capture('/home/pi/Deep_data/rgb/image_%s.jpg' % currentdate)
+	camera.capture('/home/pi/Deep_data/rgb/'+current_date+'/image_%s.jpg' % currentdate)
 	print('Captured image_%s.jpg' % currentdate)
 	logging.info('RGB Captured')
 	draw2.text((x, top+20), 'RGB image captured',  font=font, fill=255)
