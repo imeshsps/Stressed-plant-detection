@@ -80,7 +80,7 @@ GPIO.setwarnings(False)
 
 GPIO.setup(pump,GPIO.OUT)
 
-if (day_int%2)==1 :
+if (day_int%2)==0 :
 	
 	GPIO.output(pump,GPIO.LOW)
 	print "Pump on"

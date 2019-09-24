@@ -8,7 +8,13 @@ pump = 10
 whiteLight = 17
 irLED = 27
 
-GPIO.setup(growLight,GPIO.OUT)
+pinNo = 17
 
-GPIO.output(growLight,GPIO.HIGH) #to turn off
-GPIO.output(growLight,GPIO.LOW) #to turn on
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+
+GPIO.setup(pinNo,GPIO.OUT)
+
+
+#GPIO.output(pinNo,GPIO.HIGH) #to turn off
+GPIO.output(pinNo,GPIO.LOW) #to turn on
